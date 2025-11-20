@@ -4,6 +4,8 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { MapPin, Navigation } from "lucide-react";
 import type { LocationPoint } from "@/pages/Booking";
 
@@ -76,6 +78,35 @@ export const MapInterface = ({
     }
   }, [pickup, destination, onDistanceChange]);
 
+  const handlePickupLatChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const lat = parseFloat(e.target.value);
+    if (!isNaN(lat)) {
+      onPickupChange({ ...pickup, lat } as LocationPoint);
+    }
+  };
+
+  const handlePickupLngChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const lng = parseFloat(e.target.value);
+    if (!isNaN(lng)) {
+      onPickupChange({ ...pickup, lng } as LocationPoint);
+    }
+  };
+
+  const handleDestinationLatChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const lat = parseFloat(e.target.value);
+    if (!isNaN(lat)) {
+      onDestinationChange({ ...destination, lat } as LocationPoint);
+    }
+  };
+
+  const handleDestinationLngChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const lng = parseFloat(e.target.value);
+    if (!isNaN(lng)) {
+      onDestinationChange({ ...destination, lng } as LocationPoint);
+    }
+  };
+
+
   const bengaluruCenter: [number, number] = [12.9716, 77.5946];
 
   return (
@@ -88,6 +119,48 @@ export const MapInterface = ({
         <p className="text-sm text-muted-foreground mt-1">
           {!pickup ? "Click to set pickup location" : !destination ? "Click to set destination" : "Route selected"}
         </p>
+        <div className="grid grid-cols-2 gap-4 mt-4">
+          <div>
+            <Label htmlFor="pickup-lat">Pickup Latitude</Label>
+            <Input
+              id="pickup-lat"
+              type="number"
+              value={pickup?.lat ?? ""}
+              onChange={handlePickupLatChange}
+              placeholder="e.g., 12.9716"
+            />
+          </div>
+          <div>
+            <Label htmlFor="pickup-lng">Pickup Longitude</Label>
+            <Input
+              id="pickup-lng"
+              type="number"
+              value={pickup?.lng ?? ""}
+              onChange={handlePickupLngChange}
+              placeholder="e.g., 77.5946"
+            />
+          </div>
+          <div>
+            <Label htmlFor="dest-lat">Destination Latitude</Label>
+            <Input
+              id="dest-lat"
+              type="number"
+              value={destination?.lat ?? ""}
+              onChange={handleDestinationLatChange}
+              placeholder="e.g., 12.9716"
+            />
+          </div>
+          <div>
+            <Label htmlFor="dest-lng">Destination Longitude</Label>
+            <Input
+              id="dest-lng"
+              type="number"
+              value={destination?.lng ?? ""}
+              onChange={handleDestinationLngChange}
+              placeholder="e.g., 77.5946"
+            />
+          </div>
+        </div>
         <div className="flex gap-2 mt-3">
           {pickup && (
             <Badge variant="secondary" className="gap-1">
