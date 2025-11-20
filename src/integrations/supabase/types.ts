@@ -14,7 +14,93 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bookings: {
+        Row: {
+          craft_id: string | null
+          created_at: string | null
+          destination_lat: number
+          destination_lng: number
+          distance_km: number
+          estimated_arrival_minutes: number | null
+          fare_amount: number
+          id: string
+          pickup_lat: number
+          pickup_lng: number
+          status: Database["public"]["Enums"]["booking_status"] | null
+          tier_type: Database["public"]["Enums"]["taxi_tier"]
+          updated_at: string | null
+          user_name: string | null
+          user_phone: string | null
+        }
+        Insert: {
+          craft_id?: string | null
+          created_at?: string | null
+          destination_lat: number
+          destination_lng: number
+          distance_km: number
+          estimated_arrival_minutes?: number | null
+          fare_amount: number
+          id?: string
+          pickup_lat: number
+          pickup_lng: number
+          status?: Database["public"]["Enums"]["booking_status"] | null
+          tier_type: Database["public"]["Enums"]["taxi_tier"]
+          updated_at?: string | null
+          user_name?: string | null
+          user_phone?: string | null
+        }
+        Update: {
+          craft_id?: string | null
+          created_at?: string | null
+          destination_lat?: number
+          destination_lng?: number
+          distance_km?: number
+          estimated_arrival_minutes?: number | null
+          fare_amount?: number
+          id?: string
+          pickup_lat?: number
+          pickup_lng?: number
+          status?: Database["public"]["Enums"]["booking_status"] | null
+          tier_type?: Database["public"]["Enums"]["taxi_tier"]
+          updated_at?: string | null
+          user_name?: string | null
+          user_phone?: string | null
+        }
+        Relationships: []
+      }
+      tiers: {
+        Row: {
+          capacity: number | null
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          rate_per_km: number
+          speed_kmh: number
+          tier_type: Database["public"]["Enums"]["taxi_tier"]
+        }
+        Insert: {
+          capacity?: number | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          rate_per_km: number
+          speed_kmh: number
+          tier_type: Database["public"]["Enums"]["taxi_tier"]
+        }
+        Update: {
+          capacity?: number | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          rate_per_km?: number
+          speed_kmh?: number
+          tier_type?: Database["public"]["Enums"]["taxi_tier"]
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +109,15 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      booking_status:
+        | "requested"
+        | "craft_assigned"
+        | "en_route"
+        | "arrived"
+        | "in_flight"
+        | "completed"
+        | "cancelled"
+      taxi_tier: "basic" | "premium" | "elite"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +244,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      booking_status: [
+        "requested",
+        "craft_assigned",
+        "en_route",
+        "arrived",
+        "in_flight",
+        "completed",
+        "cancelled",
+      ],
+      taxi_tier: ["basic", "premium", "elite"],
+    },
   },
 } as const
